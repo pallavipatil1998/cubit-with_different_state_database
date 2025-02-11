@@ -14,14 +14,13 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
-  var titleController=TextEditingController();
-  var descController=TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<NoteCubit>().getInitialNotes();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,29 +39,7 @@ class _HomePageState extends State<HomePage> {
               var currData=state.modelList[index];
             return InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddNotePage(pageTitle:"UPDATE",bTitle: "UPDATE",update:true,data:currData,),));
-                /*showModalBottomSheet(context: context,
-                    builder: (ctx){
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text("UPDATE Note"),
-                    TextField(controller:titleController ,),
-                    TextField(controller:descController ,),
-                    ElevatedButton(onPressed: (){
-                      context.read<NoteCubit>().updateNote();
-                      titleController.clear();
-                      descController.clear();
-                      Navigator.pop(context);
-                    },
-                      child: Text("UPDATE"),
-                    )
-                      ],
-                    ),
-                  );
-                    }
-                );*/
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>AddNotePage(isupdate: true,title: currData.title,desc: currData.desc,note_id: currData.note_id,),));
 
               },
               child: ListTile(
@@ -81,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         return Center(child: Container(child: Text("No Data Found"),));
       }),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AddNotePage(update:false,),));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AddNotePage(isupdate: false),));
       },
       child: Icon(Icons.navigate_next_rounded),),
     );
